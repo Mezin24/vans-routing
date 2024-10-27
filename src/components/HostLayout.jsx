@@ -1,6 +1,6 @@
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 
-export const Header = () => {
+export const HostLayout = () => {
   const activeStyles = {
     color: '#161616',
     textDecoration: 'underline',
@@ -8,30 +8,35 @@ export const Header = () => {
   };
 
   return (
-    <header>
-      <Link to='/' className='site-logo'>
-        #vanlife
-      </Link>
-      <nav>
+    <>
+      <nav className='host-nav'>
         <NavLink
-          to='/about'
+          to='.'
           style={({ isActive }) => (isActive ? activeStyles : null)}
+          end
         >
-          About
+          Dashboard
         </NavLink>
         <NavLink
-          to='/vans'
+          to='income'
+          style={({ isActive }) => (isActive ? activeStyles : null)}
+        >
+          Income
+        </NavLink>
+        <NavLink
+          to='vans'
           style={({ isActive }) => (isActive ? activeStyles : null)}
         >
           Vans
         </NavLink>
         <NavLink
-          to='/host'
+          to='reviews'
           style={({ isActive }) => (isActive ? activeStyles : null)}
         >
-          Host
+          Reviews
         </NavLink>
       </nav>
-    </header>
+      <Outlet />
+    </>
   );
 };

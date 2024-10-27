@@ -1,20 +1,27 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { customFecth } from '../tools/customFetch';
 
 export const VanDetails = () => {
-  const { vanid } = useParams();
+  const { id } = useParams();
+  const { state } = useLocation();
   const [van, setVan] = useState(null);
   useEffect(() => {
     const fetchVan = async () => {
-      const { data } = await customFecth.get(`/vans/${vanid}`);
+      const { data } = await customFecth.get(`/vans/${id}`);
       setVan(data);
     };
     fetchVan();
   }, []);
 
+  const search = state?.search ? `?${state?.search}` : '';
+  const backTo = state?.type ?? 'all';
+
   return (
     <div className='van-detail-container'>
+      <Link to={`..${search}`} className='back-button' relative='path'>
+        &larr; <span>Back to {backTo} vans</span>
+      </Link>
       {van ? (
         <div className='van-detail'>
           <img alt={van.name} src={van.imageUrl} />
